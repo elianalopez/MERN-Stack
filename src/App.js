@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
-function App() {
+import {getBooks} from './actions/books'
+import Books from "./components/Books/Books";
+import Form from "./components/Form/Form";
+import useStyles from'./styles';
+
+const App = () => {
+  
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBooks());
+  },[dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxidth="lg">
+      <AppBar position="static" color="inherit">
+        <Typography variant="h2" align="center">
+          Book Stack
+        </Typography>
+      </AppBar>
+      <Grow in>
+        <Container>
+          <Grid
+            container
+            justify="space-between"
+            alignItems="stretch"
+            spacing={2}
+          >
+            <Grid items xs={12} sm={7}>
+              <Books />
+            </Grid>
+            <Grid items xs={12} sm={4}>
+              <Form />
+            </Grid>
+          </Grid>
+        </Container>
+      </Grow>
+    </Container>
   );
-}
+};
 
 export default App;
